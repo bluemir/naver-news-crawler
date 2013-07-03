@@ -13,8 +13,7 @@ exports.load = function(article){
 			onData(article, eucToUtf.convert(data));
 		});;
 	}).on("error", function(err){
-			console.error("load article err!");
-			console.error(err);
+			console.error("error : cannot get article!");
 	});;
 }
 function onData(article, data){
@@ -23,7 +22,7 @@ function onData(article, data){
 	body = body.replace(/[\r\n]/g, " ");
 	body = body.match(/id="articleBody">(.+)<!-- 구독버튼 , 미투하기 버튼-->/);
 	if(body == null){
-		console.error("article unfommat!");
+		console.error("error : cannot parse article!");
 		return;
 	}
 	body = body[1];

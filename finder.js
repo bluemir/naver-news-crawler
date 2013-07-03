@@ -24,7 +24,7 @@ function getArticle(date, componetId, page, callback){
 			callback(err || new Error("socket close unexpected!"));
 		});     
 	}).on("error", function(err){
-		console.error("article list error!");
+		console.error("error : cannot get list! at " + date + " : " + componetId + " : " + page);
 		callback(err);
 	});
 
@@ -33,8 +33,7 @@ function getArticle(date, componetId, page, callback){
 			chuck = eucToUtf.convert(chuck);
 			callback(null, JSON.parse(chuck));
 		} catch(e) {
-			console.error("JSON parse Error at " + date + " : " + componetId + " : " + page);
-			console.error("\t" + chuck.toString("utf8").substr(0, 100));
+			console.error("error : cannot parse list at " + date + " : " + componetId + " : " + page);
 			callback(e);
 		}
 	}
@@ -84,7 +83,7 @@ function find(startDate, endDate, partId){
 	}
 
 	function increaseDay(date){
-		return new Date(date.getTime() + 60 * 60* 24 * 1000);
+		return new Date(date.getTime() + 60 * 60 * 24 * 1000);
 	}
 }
 function handleData(data, partId){
