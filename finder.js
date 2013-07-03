@@ -38,37 +38,44 @@ function getArticle(date, componetId, page, callback){
 		}
 	}
 }
+function findAllArticle(dateStr, partId){
+	var count = 1;
+	loop();
 
-function findAllArticle(dateStr, partId) {
-	var size = 10;
-	var offset = 1;
+	function loop(){
+		var retry = 1;
+		getArticle(dateStr, partId, count, onArticle);
 
-	onloop();
+		function onArticle(e, data){
+			if(e) {
+				if(retry++ < 3){
+					getArticle(dateStr, partId, count, onArticle);
+					return;
+				}
+			} else {
+				try {
+					if(isExistBefore(data.itemList[0].url)) return;
+				} catch(e){}
 
-	function onloop(){
-		var err_flag = false;
-		var count = 0;
-		for(var i = 0; i < size; i++){
-			getArticle(dateStr, partId, offset + i, function(e, data){
-				count++;
-				if(e) {
-					err_flag = true;
-				} else {
-					ondata(data);
-				}	
-				if(count >= size){
-					if(!err_flag){
-						onloop();
-					}
-				}		
-			});
+				handleData(data.itemList, partId);
+			}
+			count++;
+			loop();	
 		}
-		offset += size;
 	}
-	function ondata(data){
-		handleData(data.itemList, partId);
+
+
+	var before = [];
+	function isExistBefore(id){
+		for(var i = 0; i < before.length; i++){
+			if(before[i] == id)
+				return true;
+		}
+		before.push(id);
+		return false;
 	}
 }
+
 function find(startDate, endDate, partId){
 	var current = startDate;
 	var startCount = 0;
