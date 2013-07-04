@@ -53,7 +53,7 @@ function findAllArticle(dateStr, partId){
 					return;
 				}
 			} else {
-				var url = data.itemList[0].linkUrl
+				var url = data.itemList[0].linkUrl || data.itemList[0].id;
 				if(url && isExistBefore(url)) return;
 				handleData(data.itemList, partId);
 			}
