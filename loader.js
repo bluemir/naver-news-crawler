@@ -10,7 +10,11 @@ exports.load = function(article){
 		res.on("data", function(chuck){
 			data = Buffer.concat([data, chuck]);
 		}).on("end", function(err){
-			onData(article, eucToUtf.convert(data));
+			try {
+				onData(article, eucToUtf.convert(data));
+			} catch(e) {
+				console.error("error : connot convert char encoding");
+			}
 		});;
 	}).on("error", function(err){
 			console.error("error : cannot get article!");
