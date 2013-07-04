@@ -53,9 +53,8 @@ function findAllArticle(dateStr, partId){
 					return;
 				}
 			} else {
-				try {
-					if(isExistBefore(data.itemList[0].url)) return;
-				} catch(e){}
+				var url = data.itemList[0].linkUrl
+				if(url && isExistBefore(url)) return;
 				handleData(data.itemList, partId);
 			}
 			count++;
