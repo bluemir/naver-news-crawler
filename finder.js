@@ -56,14 +56,12 @@ function findAllArticle(dateStr, partId){
 				try {
 					if(isExistBefore(data.itemList[0].url)) return;
 				} catch(e){}
-
 				handleData(data.itemList, partId);
 			}
 			count++;
 			loop();	
 		}
 	}
-
 
 	var before = [];
 	function isExistBefore(id){

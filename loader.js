@@ -22,7 +22,7 @@ function onData(article, data){
 	body = body.replace(/[\r\n]/g, " ");
 	body = body.match(/id="articleBody">(.+)<!-- 구독버튼 , 미투하기 버튼-->/);
 	if(body == null){
-		console.error("error : cannot parse article!");
+		console.error("error : cannot parse article at " + article.url);
 		return;
 	}
 	body = body[1];
