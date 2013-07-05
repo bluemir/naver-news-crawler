@@ -41,15 +41,20 @@ function onData(article, data){
 	body = body.replace(/&lt[^&]+&gt/g, "");
 	body = body.replace(/[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})/g, "");//email
 	body = body.replace(/<[^>]+>/g, "");//남은 잔챙이 태그 지우기
-	var translate = {"nbsp": " ","amp" : "&","quot": "\"","lt"  : "<","gt"  : ">"};
-	body = body.replace(/&(nbsp|amp|quot|lt|gt);?/g, function(match, entity){
-		return translate[entity];
-	});
+	body = decodeHtmlEntity(body);
 	body = body.replace(/\s+/g, " ");
 	body = body.replace(/^\s+/g, "");
 	
 	article.body = body;
+	article.title = decodeHtmlEntity(article.title);
 	print(article);
+
+	function decodeHtmlEntity(str){
+		var translate = {"nbsp": " ","amp" : "&","quot": "\"","lt"  : "<","gt"  : ">"};
+		return str.replace(/&(nbsp|amp|quot|lt|gt);?/g, function(match, entity){
+			return translate[entity];
+		});
+	}
 }
 function print(article){
 	console.log(article);
