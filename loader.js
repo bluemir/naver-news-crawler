@@ -10,7 +10,6 @@ exports.load = function(article){
 		return;
 	}
 	http.get("http://news.naver.com" + article.url, function(res){
-		
 		var data = new Buffer(0);
 		res.on("data", function(chuck){
 			data = Buffer.concat([data, chuck]);
@@ -57,5 +56,26 @@ function onData(article, data){
 	}
 }
 function print(article){
-	console.log(article);
+	try {
+		process.stdout.write(article.partId + "");
+		process.stdout.write("&&");
+		process.stdout.write(article.articleId + "");
+		process.stdout.write("&&");
+		process.stdout.write(article.url + "");
+		process.stdout.write("&&");
+		process.stdout.write(article.officeName + "");
+		process.stdout.write("&&");
+		process.stdout.write(article.articleDate + "");
+		process.stdout.write("&&");
+		process.stdout.write(article.registeredDate + "");
+		process.stdout.write("&&");
+		process.stdout.write(article.updateDate + "");
+		process.stdout.write("&&");
+		process.stdout.write(article.title + "");
+		process.stdout.write("&&");
+		process.stdout.write(article.body + "");
+		process.stdout.write("\n");
+	} catch (e){
+		console.error("error : stdout");
+	}
 }
