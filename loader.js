@@ -4,6 +4,10 @@ var iconv = require('iconv').Iconv;
 var eucToUtf = new iconv("euc-kr","UTF-8//TRANSLIT//IGNORE");
 
 exports.load = function(article){
+	if(!article.url){
+		onData(article, "");
+		return;
+	}
 	http.get("http://news.naver.com" + article.url, function(res){
 		
 		var data = new Buffer(0);
