@@ -49,6 +49,7 @@ function findAllArticle(dateStr, partId){
 		function onArticle(e, data){
 			if(e) {
 				if(retry++ < 3){
+					console.error("warning : getPage Error retry : " + retry);
 					getArticle(dateStr, partId, count, onArticle);
 					return;
 				}
