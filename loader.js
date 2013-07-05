@@ -5,7 +5,8 @@ var eucToUtf = new iconv("euc-kr","UTF-8//TRANSLIT//IGNORE");
 
 exports.load = function(article){
 	if(!article.url){
-		onData(article, "");
+		article.body = "";
+		print(article);
 		return;
 	}
 	http.get("http://news.naver.com" + article.url, function(res){
@@ -22,7 +23,7 @@ exports.load = function(article){
 		});;
 	}).on("error", function(err){
 			console.error("error : cannot get article!");
-	});;
+	});
 }
 function onData(article, data){
 	var body = data.toString("utf8");
